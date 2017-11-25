@@ -45,7 +45,7 @@ public class BoggleGUI {
 		playerScore = 0;
 		submittedWordPositions = new ArrayList<ArrayList<Integer>>();
 		submittedCommands = new ArrayList<JSONObject>();
-		
+		componentMap = new HashMap<String, Component>();
 		currentWord= new ArrayList<Integer>();
 				
 		frame = new JFrame();
@@ -301,17 +301,21 @@ public class BoggleGUI {
 		wordPool.setText("Word List");
 		wordPool.setBounds(289, 11, 110, 243);
 		frame.getContentPane().add(wordPool);
+		componentMap.put("wordPool", wordPool);
+		
 
 		JTextPane chatNotificationsBox = new JTextPane();
 		chatNotificationsBox.setEditable(false);
 		chatNotificationsBox.setText("Chat/ Notifications");
 		chatNotificationsBox.setBounds(10, 334, 269, 71);
 		frame.getContentPane().add(chatNotificationsBox);
+		componentMap.put("chatNotificationsBox", chatNotificationsBox);
 
 		JTextField enterChatTextBox = new JTextField();
 		enterChatTextBox.setBounds(10, 409, 162, 20);
 		frame.getContentPane().add(enterChatTextBox);
 		enterChatTextBox.setColumns(10);
+		componentMap.put("enterChatTextBox", enterChatTextBox);
 
 		JTextField submitWordText = new JTextField();
 		submitWordText.setEditable(false);
@@ -323,6 +327,7 @@ public class BoggleGUI {
 		submitWordText.setBounds(130, 266, 149, 39);
 		frame.getContentPane().add(submitWordText);
 		submitWordText.setColumns(10);
+		componentMap.put("submitWordText", submitWordText);
 		
 		JButton submitChatButton = new JButton("Submit Chat");
 		submitChatButton.addActionListener(new ActionListener() {
@@ -335,7 +340,7 @@ public class BoggleGUI {
 		});
 		submitChatButton.setBounds(182, 408, 97, 23);
 		frame.getContentPane().add(submitChatButton);
-
+		
 		
 
 		JTextPane errorMessageText = new JTextPane();
@@ -345,6 +350,7 @@ public class BoggleGUI {
 		errorMessageText.setForeground(Color.ORANGE);
 		errorMessageText.setBounds(289, 366, 110, 63);
 		frame.getContentPane().add(errorMessageText);
+		componentMap.put("errorMessageText", errorMessageText);
 
 		JButton submitButton = new JButton("Submit");
 		submitButton.setFont(new Font("Georgia", Font.BOLD, 18));
@@ -364,6 +370,7 @@ public class BoggleGUI {
 		submitButton.setBounds(289, 265, 110, 40);
 		submitButton.setMnemonic(KeyEvent.VK_ENTER);
 		frame.getContentPane().add(submitButton);
+		
 
 		JTextPane timerText = new JTextPane();
 		timerText.setEditable(false);
@@ -373,6 +380,7 @@ public class BoggleGUI {
 		timerText.setText("60");
 		timerText.setBounds(314, 316, 61, 52);
 		frame.getContentPane().add(timerText);
+		componentMap.put("timerText", timerText);
 
 		JButton clearButton = new JButton("Clear");
 		clearButton.setBackground(Color.CYAN);
@@ -403,21 +411,20 @@ public class BoggleGUI {
 		scoreLabel.setForeground(Color.CYAN);
 		scoreLabel.setBounds(111, 308, 71, 14);
 		frame.getContentPane().add(scoreLabel);
+		componentMap.put("scoreLabel", scoreLabel);
+		
 
 		// utilized this for loop from:
 		// https://stackoverflow.com/questions/4958600/get-a-swing-component-by-name
 		// Is helpful in gathering GUI components by name instead of having a ton of
 		// class variables.
-		componentMap = new HashMap<String, Component>();
-		Component[] components = frame.getContentPane().getComponents();
-		for (int i = 0; i < components.length; i++) {
-			componentMap.put(components[i].getName(), components[i]);
-		}
+	
 		frame.setVisible(true);
 	}
 
 	private void addLetter(int position) {
 		currentWord.add(position);
+		//alter submit
 	}
 	
 	private void clearEntry() {
