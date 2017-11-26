@@ -51,18 +51,21 @@ public class BoggleHandler implements Runnable {
 
 	public void sendClientMessage(JSONObject message) {
 
-		if (message.keys().next().equals("login")) {
+		String json = message.keys().next();
+		if (json.equals("login")) {
 			client = new BoggleClient();
+			boggleGUI.addToChatBox("Connecting to Server");
 			boggleRunning=true;
-		} else if (client != null && boggleRunning) {
+		} else if (boggleRunning) {
 			client.sendMessage(message);
+			boggleGUI.addToChatBox("\n CMD:"+json + "\n");
 		}
 
 	}
 
 	public void translateServerMessage(JSONObject message) {
 
-		switch (message.optString("type")) {
+		switch (message.keys().next().toUpperCase()) {
 		case ("ACK"):
 
 			boggleGUI.addToChatBox(message.getString("message"));
@@ -96,12 +99,14 @@ public class BoggleHandler implements Runnable {
 					boggleRunning = true;
 				}
 				boggleGUI.setUpBoard(letters.toCharArray());
+				boggleGUI.addToChatBox("BOARD SETUP");
 			}
 			break;
 
 		case ("GAMEEND"):
 			boggleRunning = false;
 			boggleLogic.endGame();
+			boggleGUI.addToChatBox("GAME HAS ENDED");
 			break;
 
 		case ("POINTS"):

@@ -478,7 +478,10 @@ public class BoggleGUI {
 	}
 
 	public ArrayList<JSONObject> getCommands() {
-		return submittedCommands;
+		ArrayList<JSONObject> command = new ArrayList<JSONObject>(submittedCommands);
+		submittedCommands.clear();
+
+		return command;
 	}
 
 	public Boolean isRunning() {
