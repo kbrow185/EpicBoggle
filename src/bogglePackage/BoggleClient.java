@@ -21,9 +21,9 @@ public class BoggleClient implements Runnable {
 
 	public BoggleClient() {
 
-		serverName = "ec2-34-236-147-3.compute-1.amazonaws.com";
+		//serverName = "ec2-34-236-147-3.compute-1.amazonaws.com";
+		serverName = "ec2-54-167-2-107.compute-1.amazonaws.com";
 		port = 8989;
-		serverStart = false;
 		jsons = new ArrayList<JSONObject>();
 		new Thread(this).start();
 	}
@@ -39,9 +39,9 @@ public class BoggleClient implements Runnable {
 			login.put("username", "Kenyon");
 			dataOut.println(login);
 			dataOut.flush();
+			System.out.println("connected To server.");
 			// relay message on login
 
-			serverStart = true;
 			while (true) {
 
 				try {

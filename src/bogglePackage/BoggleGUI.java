@@ -302,14 +302,6 @@ public class BoggleGUI {
 		wordPool.setBounds(289, 11, 110, 243);
 		frame.getContentPane().add(wordPool);
 		componentMap.put("wordPool", wordPool);
-		
-
-		JTextPane chatNotificationsBox = new JTextPane();
-		chatNotificationsBox.setEditable(false);
-		chatNotificationsBox.setText("Chat/ Notifications");
-		chatNotificationsBox.setBounds(10, 334, 269, 71);
-		frame.getContentPane().add(chatNotificationsBox);
-		componentMap.put("chatNotificationsBox", chatNotificationsBox);
 
 		JTextField enterChatTextBox = new JTextField();
 		enterChatTextBox.setBounds(10, 409, 162, 20);
@@ -335,7 +327,7 @@ public class BoggleGUI {
 				JSONObject chat = new JSONObject();
 				chat.put("chat", submitWordText.getText());
 				submittedCommands.add(chat);
-				submitWordText.setText("");
+				enterChatTextBox.setText("");
 			}
 		});
 		submitChatButton.setBounds(182, 408, 97, 23);
@@ -413,6 +405,12 @@ public class BoggleGUI {
 		frame.getContentPane().add(scoreLabel);
 		componentMap.put("scoreLabel", scoreLabel);
 		
+		JTextArea chatNotificationsBox = new JTextArea();
+		chatNotificationsBox.setEditable(false);
+		chatNotificationsBox.setText("chat/notifications");
+		chatNotificationsBox.setBounds(10, 334, 269, 64);
+		frame.getContentPane().add(chatNotificationsBox);
+		
 
 		// utilized this for loop from:
 		// https://stackoverflow.com/questions/4958600/get-a-swing-component-by-name
@@ -435,8 +433,8 @@ public class BoggleGUI {
 	}
 
 	public void addToChatBox(String message) {
-		JTextPane chatNotification = ((JTextPane) (componentMap.get("chatNotificationsBox")));
-		chatNotification.setText(chatNotification.getText() + message + "\n");
+		JTextArea chatNotification = ((JTextArea) (componentMap.get("chatNotificationsBox")));
+		chatNotification.append("\n" + message);
 
 	}
 
@@ -451,7 +449,7 @@ public class BoggleGUI {
 	}
 
 	public void notifyUser(String message) {
-		((JLabel) (componentMap.get("errorMessageText"))).setText(message);
+		((JTextPane) (componentMap.get("errorMessageText"))).setText(message);
 
 	}
 

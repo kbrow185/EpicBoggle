@@ -27,8 +27,8 @@ public class BoggleHandler implements Runnable {
 				for (JSONObject message : boggleGUI.getCommands()) {
 					sendClientMessage(message); 
 				}
-				for (JSONObject message : boggleGUI.getCommands()) {
-					sendClientMessage(message); 
+				for (JSONObject message : client.getResponses()) {
+					translateServerMessage(message); 
 				}
 
 				if (boggleRunning) {
@@ -65,7 +65,10 @@ public class BoggleHandler implements Runnable {
 
 	public void translateServerMessage(JSONObject message) {
 
-		switch (message.keys().next().toUpperCase()) {
+		String response =message.keys().next().toUpperCase();
+		boggleGUI.addToChatBox(response);
+		
+		switch (response) {
 		case ("ACK"):
 
 			boggleGUI.addToChatBox(message.getString("message"));
