@@ -11,20 +11,24 @@ public class BoggleHandler implements Runnable {
 	BoggleGUI boggleGUI;
 	Boolean boggleRunning;
 
-	public BoggleHandler() {
+ 	public BoggleHandler() {
 
 		boggleRunning = false;
 		boggleGUI = new BoggleGUI();
+		new Thread(this).start();
 	}
 
 	@Override
 	public void run() {
-
+		
 		while (boggleGUI.isRunning()) {
 			try {
-				Thread.sleep(500);
+				Thread.sleep(200);
 				for (JSONObject message : boggleGUI.getCommands()) {
-					sendClientMessage(message);
+					sendClientMessage(message); 
+				}
+				for (JSONObject message : boggleGUI.getCommands()) {
+					sendClientMessage(message); 
 				}
 
 				if (boggleRunning) {
@@ -47,8 +51,9 @@ public class BoggleHandler implements Runnable {
 
 	public void sendClientMessage(JSONObject message) {
 
-		if (message.optString("type").equalsIgnoreCase("login")) {
+		if (message.keys().next().equals("login")) {
 			client = new BoggleClient();
+			boggleRunning=true;
 		} else if (client != null && boggleRunning) {
 			client.sendMessage(message);
 		}

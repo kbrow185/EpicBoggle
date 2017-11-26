@@ -148,7 +148,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile2", letterTile2);
 		letterTile2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(letterTile2.getText());
+				addLetter(2,letterTile2.getText());
 			}
 		});
 		panel.add(letterTile2, "6, 2");
@@ -460,6 +460,8 @@ public class BoggleGUI {
 	}
 
 	public void setUpBoard(char[] board) {
+		gatherWords();
+		clearEntry();
 		((JTextArea) (componentMap.get("wordPool"))).setText("");
 		playerScore = 0;
 		((JLabel) (componentMap.get("scoreLabel"))).setText(String.valueOf(playerScore));

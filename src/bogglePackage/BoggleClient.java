@@ -70,5 +70,11 @@ public class BoggleClient implements Runnable {
 		dataOut.println(message);
 		dataOut.flush();
 	}
+	public ArrayList<JSONObject> getResponses(){
+		
+		ArrayList<JSONObject> temp = new ArrayList<JSONObject>(jsons);
+		jsons.clear();
+		return temp;
+	}
 
 }
