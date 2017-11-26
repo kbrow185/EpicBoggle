@@ -126,7 +126,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile0", letterTile0);
 		letterTile0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(0);
+				addLetter(0,letterTile0.getText());
 			}
 		});
 		panel.add(letterTile0, "2, 2");
@@ -137,7 +137,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile1", letterTile1);
 		letterTile1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(1);
+				addLetter(1,letterTile1.getText());
 			}
 		});
 		panel.add(letterTile1, "4, 2");
@@ -148,7 +148,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile2", letterTile2);
 		letterTile2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(2);
+				addLetter(letterTile2.getText());
 			}
 		});
 		panel.add(letterTile2, "6, 2");
@@ -159,7 +159,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile3", letterTile3);
 		letterTile3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(3);
+				addLetter(3,letterTile3.getText());
 			}
 		});
 		panel.add(letterTile3, "8, 2");
@@ -170,7 +170,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile4", letterTile4);
 		letterTile4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(4);
+				addLetter(4,letterTile4.getText());
 			}
 		});
 		panel.add(letterTile4, "2, 4");
@@ -181,7 +181,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile5", letterTile5);
 		letterTile5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(5);
+				addLetter(5,letterTile5.getText());
 			}
 		});
 		panel.add(letterTile5, "4, 4");
@@ -192,7 +192,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile6", letterTile6);
 		letterTile6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(6);
+				addLetter(6,letterTile6.getText());
 			}
 		});
 		panel.add(letterTile6, "6, 4");
@@ -203,7 +203,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile7", letterTile7);
 		letterTile7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(7);
+				addLetter(7,letterTile7.getText());
 			}
 		});
 		panel.add(letterTile7, "8, 4");
@@ -214,7 +214,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile8", letterTile8);
 		letterTile8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(8);
+				addLetter(8,letterTile8.getText());
 			}
 		});
 		panel.add(letterTile8, "2, 6");
@@ -225,7 +225,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile9", letterTile9);
 		letterTile9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(9);
+				addLetter(9,letterTile9.getText());
 			}
 		});
 		panel.add(letterTile9, "4, 6");
@@ -236,7 +236,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile10", letterTile10);
 		letterTile10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(10);
+				addLetter(10,letterTile10.getText());
 			}
 		});
 		panel.add(letterTile10, "6, 6");
@@ -247,7 +247,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile11", letterTile11);
 		letterTile11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(11);
+				addLetter(11,letterTile11.getText());
 			}
 		});
 		panel.add(letterTile11, "8, 6");
@@ -258,7 +258,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile12", letterTile12);
 		letterTile12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(12);
+				addLetter(12,letterTile12.getText());
 			}
 		});
 		panel.add(letterTile12, "2, 8");
@@ -269,7 +269,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile13", letterTile13);
 		letterTile13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(13);
+				addLetter(13,letterTile13.getText());
 			}
 		});
 		panel.add(letterTile13, "4, 8");
@@ -280,7 +280,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile14", letterTile14);
 		letterTile14.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(14);
+				addLetter(14,letterTile14.getText());
 			}
 		});
 		panel.add(letterTile14, "6, 8");
@@ -291,7 +291,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile15", letterTile15);
 		letterTile15.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(15);
+				addLetter(15,letterTile15.getText());
 			}
 		});
 		panel.add(letterTile15, "8, 8");
@@ -422,9 +422,11 @@ public class BoggleGUI {
 		frame.setVisible(true);
 	}
 
-	private void addLetter(int position) {
+	private void addLetter(int position,String letter) {
 		currentWord.add(position);
-		//alter submit
+		JTextField wordSubmission = ((JTextField) (componentMap.get("submitWordText")));
+		wordSubmission.setText(wordSubmission.getText()+letter);
+		
 	}
 	
 	private void clearEntry() {
