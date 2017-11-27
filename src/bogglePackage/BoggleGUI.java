@@ -410,6 +410,7 @@ public class BoggleGUI {
 		chatNotificationsBox.setText("chat/notifications");
 		chatNotificationsBox.setBounds(10, 334, 269, 64);
 		frame.getContentPane().add(chatNotificationsBox);
+		componentMap.put("chatNotificationsBox", chatNotificationsBox);
 		
 
 		// utilized this for loop from:

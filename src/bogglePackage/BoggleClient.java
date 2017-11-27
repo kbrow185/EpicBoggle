@@ -35,8 +35,7 @@ public class BoggleClient implements Runnable {
 			clientSocket = new Socket(serverName, port);
 			dataIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			dataOut = new PrintWriter(clientSocket.getOutputStream());
-			JSONObject login = new JSONObject();
-			login.put("username", "Kenyon");
+			JSONObject login = new JSONObject("{type: 'login', 'message': {'username': 'Kenyon'}}");
 			dataOut.println(login);
 			dataOut.flush();
 			System.out.println("connected To server.");
@@ -47,8 +46,8 @@ public class BoggleClient implements Runnable {
 				try {
 
 					JSONObject response = new JSONObject(dataIn.readLine());
-					// translateMessage(response);
 					jsons.add(response);
+					System.out.println(response);
 
 				} catch (IOException e) {
 					e.printStackTrace();
