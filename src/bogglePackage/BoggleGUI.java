@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 public class BoggleGUI {
 
@@ -405,12 +406,17 @@ public class BoggleGUI {
 		frame.getContentPane().add(scoreLabel);
 		componentMap.put("scoreLabel", scoreLabel);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 334, 269, 64);
+		frame.getContentPane().add(scrollPane);
+		
 		JTextArea chatNotificationsBox = new JTextArea();
+		chatNotificationsBox.setFont(new Font("Georgia", Font.PLAIN, 12));
 		chatNotificationsBox.setEditable(false);
 		chatNotificationsBox.setText("chat/notifications");
-		chatNotificationsBox.setBounds(10, 334, 269, 64);
-		frame.getContentPane().add(chatNotificationsBox);
 		componentMap.put("chatNotificationsBox", chatNotificationsBox);
+		scrollPane.setViewportView(chatNotificationsBox);
+
 		
 
 		// utilized this for loop from:

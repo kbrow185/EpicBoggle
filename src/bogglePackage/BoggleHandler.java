@@ -65,14 +65,13 @@ public class BoggleHandler implements Runnable {
 
 	public void translateServerMessage(JSONObject message) {
 
-		String response =message.keys().next().toUpperCase();
-		boggleGUI.addToChatBox(response);
+		String response =message.optString("type").toUpperCase();
+		//boggleGUI.addToChatBox(response);
 		
 		switch (response) {
-		case ("ACK"):
+		case ("ACKNOWLEDGE"):
 
 			boggleGUI.addToChatBox(message.getString("message"));
-			// Will pull out string message "XXX successfully logged into game"
 			break;
 
 		case ("DENY"):
