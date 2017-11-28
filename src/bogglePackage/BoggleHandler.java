@@ -35,9 +35,7 @@ public class BoggleHandler implements Runnable {
 
 					for (ArrayList<Integer> words : boggleGUI.gatherWords()) {
 						if (boggleLogic.checkSubmission(words)) {
-							JSONObject submission = new JSONObject();
-							Integer[] positions = (Integer[]) words.toArray(new Integer[words.size()]);
-							submission.put("GUESS", positions);
+							JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("guess",words));
 							sendClientMessage(submission);
 						}
 					}
@@ -51,7 +49,7 @@ public class BoggleHandler implements Runnable {
 
 	public void sendClientMessage(JSONObject message) {
 
-		String json = message.keys().next();
+		String json = message.optString("type");
 		if (json.equals("login")) {
 			client = new BoggleClient();
 			boggleGUI.addToChatBox("Connecting to Server");
@@ -65,7 +63,7 @@ public class BoggleHandler implements Runnable {
 
 	public void translateServerMessage(JSONObject message) {
 
-		String response =message.optString("type").toUpperCase();
+		String response =message.optString("type");
 		//boggleGUI.addToChatBox(response);
 		
 		switch (response) {

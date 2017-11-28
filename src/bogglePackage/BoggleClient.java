@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-
 import org.json.JSONObject;
 
 public class BoggleClient implements Runnable {
@@ -35,7 +34,7 @@ public class BoggleClient implements Runnable {
 			clientSocket = new Socket(serverName, port);
 			dataIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			dataOut = new PrintWriter(clientSocket.getOutputStream());
-			JSONObject login = new JSONObject("{type: 'login', 'message': {'username': 'Kenyon'}}");
+			JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login","","username","Kenyon"));
 			dataOut.println(login);
 			dataOut.flush();
 			System.out.println("connected To server.");

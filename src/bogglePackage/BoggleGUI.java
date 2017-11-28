@@ -64,9 +64,8 @@ public class BoggleGUI {
 		connectToServerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				JSONObject connect = new JSONObject();
-				connect.put("login", "Kenyon");
-				submittedCommands.add(connect);
+				JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login","","username","Kenyon"));
+				submittedCommands.add(login);
 			}
 		});
 		mnFile.add(connectToServerButton);
@@ -88,8 +87,7 @@ public class BoggleGUI {
 		startGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				JSONObject connect = new JSONObject();
-				connect.put("play", "play");
+				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("play"));
 				submittedCommands.add(connect);
 			}
 		});
@@ -325,8 +323,7 @@ public class BoggleGUI {
 		JButton submitChatButton = new JButton("Submit Chat");
 		submitChatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JSONObject chat = new JSONObject();
-				chat.put("chat", submitWordText.getText());
+				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("chat", submitWordText.getText()));
 				submittedCommands.add(chat);
 				enterChatTextBox.setText("");
 			}
@@ -334,9 +331,9 @@ public class BoggleGUI {
 		submitChatButton.setBounds(182, 408, 97, 23);
 		frame.getContentPane().add(submitChatButton);
 		
-		
 
 		JTextPane errorMessageText = new JTextPane();
+		errorMessageText.setEditable(false);
 		errorMessageText.setFont(new Font("Georgia", Font.BOLD, 14));
 		errorMessageText.setBackground(Color.BLACK);
 		errorMessageText.setText("ERROR MESSAGE");
