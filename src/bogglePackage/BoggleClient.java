@@ -46,7 +46,7 @@ public class BoggleClient implements Runnable {
 
 					JSONObject response = new JSONObject(dataIn.readLine());
 					jsons.add(response);
-					System.out.println(response);
+					System.out.println("Receive :"+response);
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -67,6 +67,7 @@ public class BoggleClient implements Runnable {
 	public void sendMessage(JSONObject message) {
 		dataOut.println(message);
 		dataOut.flush();
+		System.out.println("Data out: " + message);
 	}
 	public ArrayList<JSONObject> getResponses(){
 		

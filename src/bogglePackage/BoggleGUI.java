@@ -83,11 +83,11 @@ public class BoggleGUI {
 		JMenu mnGame = new JMenu("Game");
 		menuBar.add(mnGame);
 
-		JMenuItem startGameButton = new JMenuItem("Start Game");
+		JMenuItem startGameButton = new JMenuItem("Play Game");
 		startGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("play"));
+				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("PLAY"));
 				submittedCommands.add(connect);
 			}
 		});
@@ -323,7 +323,7 @@ public class BoggleGUI {
 		JButton submitChatButton = new JButton("Submit Chat");
 		submitChatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("chat", submitWordText.getText()));
+				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("application","","action","CHAT","chatMessage",enterChatTextBox.getText()));
 				submittedCommands.add(chat);
 				enterChatTextBox.setText("");
 			}
@@ -334,7 +334,7 @@ public class BoggleGUI {
 
 		JTextPane errorMessageText = new JTextPane();
 		errorMessageText.setEditable(false);
-		errorMessageText.setFont(new Font("Georgia", Font.BOLD, 14));
+		errorMessageText.setFont(new Font("Georgia", Font.BOLD, 12));
 		errorMessageText.setBackground(Color.BLACK);
 		errorMessageText.setText("ERROR MESSAGE");
 		errorMessageText.setForeground(Color.ORANGE);

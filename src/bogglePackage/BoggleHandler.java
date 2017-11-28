@@ -2,6 +2,7 @@ package bogglePackage;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class BoggleHandler implements Runnable {
@@ -33,9 +34,9 @@ public class BoggleHandler implements Runnable {
 
 				if (boggleRunning) {
 
-					for (ArrayList<Integer> words : boggleGUI.gatherWords()) {
-						if (boggleLogic.checkSubmission(words)) {
-							JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("guess",words));
+					for (ArrayList<Integer> letters : boggleGUI.gatherWords()) {
+						if (boggleLogic.checkSubmission(letters)) {
+							JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("guess",new JSONArray(letters)));
 							sendClientMessage(submission);
 						}
 					}
@@ -56,14 +57,14 @@ public class BoggleHandler implements Runnable {
 			boggleRunning=true;
 		} else if (boggleRunning) {
 			client.sendMessage(message);
-			boggleGUI.addToChatBox("\n CMD:"+json + "\n");
+			//boggleGUI.addToChatBox("\n CMD:"+json + "\n");
 		}
 
 	}
 
 	public void translateServerMessage(JSONObject message) {
 
-		String response =message.optString("type");
+		String response =message.optString("type").toUpperCase();
 		//boggleGUI.addToChatBox(response);
 		
 		switch (response) {
@@ -75,44 +76,54 @@ public class BoggleHandler implements Runnable {
 		case ("DENY"):
 			boggleGUI.addToChatBox(message.getString("message"));
 			break;
+		
+		case("APPLICATION"):
+			
+			JSONObject json = message.getJSONObject("message");
+			String action = json.getString("action").toUpperCase();
+			//System.out.println("ACTION:" +action);
+			
+			switch(action) {
+			
+			case ("CHAT"):
+				System.out.println("Chat" +json.optString("chatMessage"));
+				String dialog = json.optString("chatMessage");
+				boggleGUI.addToChatBox("Chat: " +dialog);
+				break;
 
-		case ("CHAT"):
-			String userName = message.optString("username");
-			String dialog = message.optString("message");
-			boggleGUI.addToChatBox(userName + ": " + dialog);
-			break;
+			case ("WORD"):
+				boggleGUI.addToWordList(json.optString("WORD"));
+				break;
 
-		case ("WORD"):
-			boggleGUI.addToWordList(message.optString("word"));
-			break;
-
-		case ("GAMESTART"):
-			int size = message.optJSONArray("gamestart").length();
-
-			if (size > 0) {
-				String letters = "";
-				for (Object j : message.optJSONArray("gamestart")) {
-					letters.concat(j.toString());
+			case ("STARTGAME"):
+				int size = json.optJSONArray("board").length();
+				System.out.println("ArraySize:" + size);
+				if (size > 0) {
+					String letters = "";
+					for (Object j : json.optJSONArray("board")) {
+						System.out.println(j.toString());
+						letters.concat(j.toString());
+					}
+					if (!boggleRunning) {
+						boggleLogic = new BoggleLogic();
+						boggleRunning = true;
+					}
+					boggleGUI.setUpBoard(letters.toCharArray());
+					boggleGUI.addToChatBox("BOARD SETUP");
 				}
-				if (!boggleRunning) {
-					boggleLogic = new BoggleLogic();
-					boggleRunning = true;
-				}
-				boggleGUI.setUpBoard(letters.toCharArray());
-				boggleGUI.addToChatBox("BOARD SETUP");
+				break;
+
+			case ("GAMEEND"):
+				boggleRunning = false;
+				boggleLogic.endGame();
+				boggleGUI.addToChatBox("GAME HAS ENDED");
+				break;
+
+			case ("POINTS"):
+				boggleGUI.addPoints(message.optInt("points"));
+				break;
 			}
-			break;
-
-		case ("GAMEEND"):
-			boggleRunning = false;
-			boggleLogic.endGame();
-			boggleGUI.addToChatBox("GAME HAS ENDED");
-			break;
-
-		case ("POINTS"):
-			boggleGUI.addPoints(message.optInt("points"));
-			break;
-
+		break;
 		}
 
 	}
