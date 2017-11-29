@@ -46,8 +46,8 @@ public class BoggleLogic {
 		gameTimer.stop();
 	}
 
-	public int getTime() {
-		return timeRemaining;
+	public String getTime() {
+		return String.valueOf(timeRemaining);
 	}
 
 	private void gameStart() {
@@ -66,6 +66,7 @@ public class BoggleLogic {
 				word.append(boardLetters[spot]);
 			}
 			valid = (checkWord(word.toString()) && checkPositions(positions));
+
 		}
 
 		return valid;

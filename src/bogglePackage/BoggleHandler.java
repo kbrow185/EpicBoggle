@@ -11,9 +11,10 @@ public class BoggleHandler implements Runnable {
 	BoggleClient client;
 	BoggleGUI boggleGUI;
 	Boolean boggleRunning;
+	Boolean connectedToServer;
 
  	public BoggleHandler() {
-
+ 		connectedToServer = false;
 		boggleRunning = false;
 		boggleGUI = new BoggleGUI();
 		new Thread(this).start();
@@ -33,11 +34,21 @@ public class BoggleHandler implements Runnable {
 				}
 
 				if (boggleRunning) {
-
-					for (ArrayList<Integer> letters : boggleGUI.gatherWords()) {
-						if (boggleLogic.checkSubmission(letters)) {
-							JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("guess",new JSONArray(letters)));
-							sendClientMessage(submission);
+					boggleGUI.setTimer(boggleLogic.getTime());
+					ArrayList<ArrayList<Integer>> letterList = boggleGUI.gatherWords();
+					if(letterList.size()>0) {
+						for (ArrayList<Integer> letters : letterList) {
+							//System.out.println(letters.toString());
+							
+							for(int i : letters)
+								System.out.print(i+",");
+							
+							
+							if (boggleLogic.checkSubmission(letters)) {
+								System.out.println("REAL WORD");
+								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS",new JSONArray(letters)));
+								sendClientMessage(submission);
+							}
 						}
 					}
 				}
@@ -54,10 +65,9 @@ public class BoggleHandler implements Runnable {
 		if (json.equals("login")) {
 			client = new BoggleClient();
 			boggleGUI.addToChatBox("Connecting to Server");
-			boggleRunning=true;
-		} else if (boggleRunning) {
+			connectedToServer=true;
+		} else if (connectedToServer) {
 			client.sendMessage(message);
-			//boggleGUI.addToChatBox("\n CMD:"+json + "\n");
 		}
 
 	}
@@ -65,7 +75,6 @@ public class BoggleHandler implements Runnable {
 	public void translateServerMessage(JSONObject message) {
 
 		String response =message.optString("type").toUpperCase();
-		//boggleGUI.addToChatBox(response);
 		
 		switch (response) {
 		case ("ACKNOWLEDGE"):
@@ -81,12 +90,11 @@ public class BoggleHandler implements Runnable {
 			
 			JSONObject json = message.getJSONObject("message");
 			String action = json.getString("action").toUpperCase();
-			//System.out.println("ACTION:" +action);
 			
 			switch(action) {
 			
 			case ("CHAT"):
-				System.out.println("Chat" +json.optString("chatMessage"));
+				//System.out.println("Chat" +json.optString("chatMessage"));
 				String dialog = json.optString("chatMessage");
 				boggleGUI.addToChatBox("Chat: " +dialog);
 				break;
@@ -97,18 +105,19 @@ public class BoggleHandler implements Runnable {
 
 			case ("STARTGAME"):
 				int size = json.optJSONArray("board").length();
-				System.out.println("ArraySize:" + size);
+
 				if (size > 0) {
 					String letters = "";
 					for (Object j : json.optJSONArray("board")) {
-						System.out.println(j.toString());
-						letters.concat(j.toString());
+						letters+= j.toString();
 					}
+					System.out.println(letters);
 					if (!boggleRunning) {
 						boggleLogic = new BoggleLogic();
 						boggleRunning = true;
 					}
 					boggleGUI.setUpBoard(letters.toCharArray());
+					boggleLogic.resetBoard(letters.toCharArray());
 					boggleGUI.addToChatBox("BOARD SETUP");
 				}
 				break;

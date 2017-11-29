@@ -51,7 +51,7 @@ public class BoggleGUI {
 				
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.BLACK);
-		frame.setBounds(100, 100, 425, 500);
+		frame.setBounds(100, 100, 463, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -105,7 +105,7 @@ public class BoggleGUI {
 
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.BLACK);
-		panel.setBounds(10, 11, 269, 243);
+		panel.setBounds(10, 11, 318, 243);
 		frame.getContentPane().add(panel);
 		panel.setLayout(new FormLayout(
 				new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
@@ -119,7 +119,7 @@ public class BoggleGUI {
 						FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 						FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
-		JButton letterTile0 = new JButton("Z");
+		JButton letterTile0 = new JButton("M");
 		letterTile0.setBackground(new Color(255, 215, 0));
 		letterTile0.setFont(new Font("Georgia", Font.BOLD, 38));
 		componentMap.put("letterTile0", letterTile0);
@@ -130,7 +130,7 @@ public class BoggleGUI {
 		});
 		panel.add(letterTile0, "2, 2");
 
-		JButton letterTile1 = new JButton("Z");
+		JButton letterTile1 = new JButton("M");
 		letterTile1.setBackground(new Color(255, 215, 0));
 		letterTile1.setFont(new Font("Georgia", Font.BOLD, 38));
 		componentMap.put("letterTile1", letterTile1);
@@ -141,7 +141,7 @@ public class BoggleGUI {
 		});
 		panel.add(letterTile1, "4, 2");
 
-		JButton letterTile2 = new JButton("Z");
+		JButton letterTile2 = new JButton("M");
 		letterTile2.setBackground(new Color(255, 215, 0));
 		letterTile2.setFont(new Font("Georgia", Font.BOLD, 38));
 		componentMap.put("letterTile2", letterTile2);
@@ -152,7 +152,7 @@ public class BoggleGUI {
 		});
 		panel.add(letterTile2, "6, 2");
 
-		JButton letterTile3 = new JButton("Z");
+		JButton letterTile3 = new JButton("M");
 		letterTile3.setBackground(new Color(255, 215, 0));
 		letterTile3.setFont(new Font("Georgia", Font.BOLD, 38));
 		componentMap.put("letterTile3", letterTile3);
@@ -298,7 +298,7 @@ public class BoggleGUI {
 		JTextArea wordPool = new JTextArea();
 		wordPool.setEditable(false);
 		wordPool.setText("Word List");
-		wordPool.setBounds(289, 11, 110, 243);
+		wordPool.setBounds(340, 11, 97, 243);
 		frame.getContentPane().add(wordPool);
 		componentMap.put("wordPool", wordPool);
 
@@ -315,7 +315,7 @@ public class BoggleGUI {
 		submitWordText.setText("Word");
 		submitWordText.setForeground(Color.WHITE);
 		submitWordText.setBackground(Color.BLUE);
-		submitWordText.setBounds(130, 266, 149, 39);
+		submitWordText.setBounds(130, 266, 192, 39);
 		frame.getContentPane().add(submitWordText);
 		submitWordText.setColumns(10);
 		componentMap.put("submitWordText", submitWordText);
@@ -338,7 +338,7 @@ public class BoggleGUI {
 		errorMessageText.setBackground(Color.BLACK);
 		errorMessageText.setText("ERROR MESSAGE");
 		errorMessageText.setForeground(Color.ORANGE);
-		errorMessageText.setBounds(289, 366, 110, 63);
+		errorMessageText.setBounds(289, 366, 148, 63);
 		frame.getContentPane().add(errorMessageText);
 		componentMap.put("errorMessageText", errorMessageText);
 
@@ -347,17 +347,16 @@ public class BoggleGUI {
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					submittedWordPositions.add(currentWord);
-					currentWord.clear();
+					submittedWordPositions.add(new ArrayList<Integer>(currentWord));
 				} catch (Exception e) {
-
+					//If the word is invalid, nothing is sent.
 				}
 				clearEntry();
 			}
 		});
 		submitButton.setForeground(Color.WHITE);
 		submitButton.setBackground(Color.CYAN);
-		submitButton.setBounds(289, 265, 110, 40);
+		submitButton.setBounds(327, 265, 110, 40);
 		submitButton.setMnemonic(KeyEvent.VK_ENTER);
 		frame.getContentPane().add(submitButton);
 		
@@ -368,7 +367,7 @@ public class BoggleGUI {
 		timerText.setBackground(Color.BLACK);
 		timerText.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 40));
 		timerText.setText("60");
-		timerText.setBounds(314, 316, 61, 52);
+		timerText.setBounds(327, 316, 61, 52);
 		frame.getContentPane().add(timerText);
 		componentMap.put("timerText", timerText);
 
@@ -426,24 +425,26 @@ public class BoggleGUI {
 
 	private void addLetter(int position,String letter) {
 		currentWord.add(position);
+		System.out.println(letter+position);
 		JTextField wordSubmission = ((JTextField) (componentMap.get("submitWordText")));
 		wordSubmission.setText(wordSubmission.getText()+letter);
-		
 	}
 	
 	private void clearEntry() {
 		((JTextField) (componentMap.get("submitWordText"))).setText("");
 		currentWord.clear();
 	}
+	public void endGame() {
+		
+	}
 
 	public void addToChatBox(String message) {
 		JTextArea chatNotification = ((JTextArea) (componentMap.get("chatNotificationsBox")));
 		chatNotification.append("\n" + message);
-
 	}
 
 	public void setTimer(String time) {
-		((JLabel) (componentMap.get("timerText"))).setText(time);
+		((JTextPane) (componentMap.get("timerText"))).setText(time);
 	}
 
 	public ArrayList<ArrayList<Integer>> gatherWords() {
@@ -468,8 +469,8 @@ public class BoggleGUI {
 		playerScore = 0;
 		((JLabel) (componentMap.get("scoreLabel"))).setText(String.valueOf(playerScore));
 
-		for (int i = 0; i < componentMap.size(); i++) {
-			((JButton) componentMap.get("Button" + i)).setText(String.valueOf(board[i]));
+		for (int i = 0; i < board.length; i++) {
+			((JButton) componentMap.get("letterTile" + i)).setText(String.valueOf(board[i]));
 		}
 		notifyUser("Board is ready.");
 	}
