@@ -1,6 +1,7 @@
 package bogglePackage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +15,8 @@ public class Dictionary {
 
 	public Dictionary() throws Exception {
 		try {
-			fileIn = new BufferedReader(new FileReader("/Assets/dictionary.txt"));
+			wordList = new ArrayList<String>();
+			fileIn = new BufferedReader(new FileReader(new File(getClass().getResource("/dictionary.txt").toURI())));
 
 			// Grabbed this line from:
 			// https://stackoverflow.com/questions/11607270/how-to-check-whether-given-string-is-a-word
@@ -32,7 +34,7 @@ public class Dictionary {
 
 	public boolean findWord(String word) {
 
-		return (Collections.binarySearch(wordList, word) >= 0);
+		return (Collections.binarySearch(wordList, word.toUpperCase()) >= 0);
 
 	}
 
