@@ -102,7 +102,7 @@ public class BoggleHandler implements Runnable {
 				break;
 
 			case ("WORD"):
-				boggleGUI.addToWordList(application.optString("WORD"));
+				boggleGUI.addToWordList(application.optString("word"));
 				break;
 
 			case ("STARTGAME"):
@@ -121,7 +121,7 @@ public class BoggleHandler implements Runnable {
 						boggleRunning = true;
 						boggleGUI.setUpBoard(letters.toCharArray());
 						boggleLogic.resetBoard(letters.toCharArray());
-						
+						boggleGUI.addToChatBox("GAME STARTED");
 						}catch(FileNotFoundException e) {
 							displayError(e.getMessage());
 						}
