@@ -1,6 +1,9 @@
 package bogglePackage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,8 +32,11 @@ public class BoggleHandler implements Runnable {
 				for (JSONObject message : boggleGUI.getCommands()) {
 					sendClientMessage(message); 
 				}
-				for (JSONObject message : client.getResponses()) {
-					translateServerMessage(message); 
+				
+				if(connectedToServer) {
+					for (JSONObject message : client.getResponses()) {
+						translateServerMessage(message); 
+					}
 				}
 
 				if (boggleRunning) {
@@ -38,7 +44,6 @@ public class BoggleHandler implements Runnable {
 					ArrayList<ArrayList<Integer>> letterList = boggleGUI.gatherWords();
 					if(letterList.size()>0) {
 						for (ArrayList<Integer> letters : letterList) {
-							//System.out.println(letters.toString());
 							
 							for(int i : letters)
 								System.out.print(i+",");
@@ -46,14 +51,15 @@ public class BoggleHandler implements Runnable {
 							
 							if (boggleLogic.checkSubmission(letters)) {
 								System.out.println("REAL WORD");
-								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS",new JSONArray(letters)));
+								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS","guess",new JSONArray(letters)));
 								sendClientMessage(submission);
 							}
 						}
 					}
 				}
 			} catch (Exception e) {
-				boggleGUI.notifyUser(e.getMessage());
+				
+				displayError(e.getMessage());
 			}
 		}
 
@@ -111,14 +117,21 @@ public class BoggleHandler implements Runnable {
 					for (Object j : json.optJSONArray("board")) {
 						letters+= j.toString();
 					}
-					System.out.println(letters);
+
 					if (!boggleRunning) {
+						try {
+							
 						boggleLogic = new BoggleLogic();
 						boggleRunning = true;
+						boggleGUI.setUpBoard(letters.toCharArray());
+						boggleLogic.resetBoard(letters.toCharArray());
+						boggleGUI.addToChatBox("BOARD SETUP");
+						
+						}catch(FileNotFoundException e) {
+							displayError(e.getMessage());
+						}
 					}
-					boggleGUI.setUpBoard(letters.toCharArray());
-					boggleLogic.resetBoard(letters.toCharArray());
-					boggleGUI.addToChatBox("BOARD SETUP");
+
 				}
 				break;
 
@@ -135,5 +148,9 @@ public class BoggleHandler implements Runnable {
 		break;
 		}
 
+	}
+	private void displayError(String error) {
+		System.out.println(error);
+		JOptionPane.showMessageDialog(null, error);
 	}
 }

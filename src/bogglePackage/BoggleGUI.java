@@ -336,7 +336,7 @@ public class BoggleGUI {
 		errorMessageText.setEditable(false);
 		errorMessageText.setFont(new Font("Georgia", Font.BOLD, 12));
 		errorMessageText.setBackground(Color.BLACK);
-		errorMessageText.setText("ERROR MESSAGE");
+		errorMessageText.setText("Notification Message");
 		errorMessageText.setForeground(Color.ORANGE);
 		errorMessageText.setBounds(289, 366, 148, 63);
 		frame.getContentPane().add(errorMessageText);

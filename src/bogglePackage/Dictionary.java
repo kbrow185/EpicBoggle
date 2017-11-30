@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,7 +12,7 @@ public class Dictionary {
 	BufferedReader fileIn;
 	ArrayList<String> wordList;
 
-	public Dictionary() throws Exception {
+	public Dictionary() throws FileNotFoundException {
 		try {
 			wordList = new ArrayList<String>();
 			fileIn = new BufferedReader(new FileReader(new File(getClass().getResource("/dictionary.txt").toURI())));
@@ -25,10 +24,8 @@ public class Dictionary {
 			while ((line = fileIn.readLine()) != null) {
 				wordList.add(line);
 			}
-		} catch (FileNotFoundException e) {
-			throw new Exception("Dictionary File not found.");
-		} catch (IOException e) {
-			throw new Exception("Unable to import word.");
+		}catch(Exception e) {
+			throw new FileNotFoundException();
 		}
 	}
 

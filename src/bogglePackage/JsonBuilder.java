@@ -16,11 +16,11 @@ public class JsonBuilder {
 		return "{type:"+type+", message:" +Message+"}";
 		
 	}
-	public static String JsonBuilderMethod(String gameAction, JSONArray word) {
+	public static String JsonBuilderMethod(String gameAction, String objectName, JSONArray word) {
 		
 		return "{type: 'application', message:"
 				+ "{ module: 'Boggle_Of_Epicness',"
-				+ "action:"+ gameAction+","+word+ "}}";
+				+ "action:"+ gameAction+","+objectName+":"+word+"}}";
 					
 	}
 	public static String JsonBuilderMethod(String gameAction) {
