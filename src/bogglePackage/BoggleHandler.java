@@ -51,7 +51,7 @@ public class BoggleHandler implements Runnable {
 							
 							if (boggleLogic.checkSubmission(letters)) {
 								System.out.println("REAL WORD");
-								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS","guess",new JSONArray(letters)));
+								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS","positions",new JSONArray(letters)));
 								sendClientMessage(submission);
 							}
 						}
