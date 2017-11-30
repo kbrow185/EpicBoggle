@@ -303,7 +303,7 @@ public class BoggleGUI {
 		componentMap.put("wordPool", wordPool);
 
 		JTextField enterChatTextBox = new JTextField();
-		enterChatTextBox.setBounds(10, 409, 162, 20);
+		enterChatTextBox.setBounds(10, 409, 205, 20);
 		frame.getContentPane().add(enterChatTextBox);
 		enterChatTextBox.setColumns(10);
 		componentMap.put("enterChatTextBox", enterChatTextBox);
@@ -328,7 +328,7 @@ public class BoggleGUI {
 				enterChatTextBox.setText("");
 			}
 		});
-		submitChatButton.setBounds(182, 408, 97, 23);
+		submitChatButton.setBounds(225, 408, 97, 23);
 		frame.getContentPane().add(submitChatButton);
 		
 
@@ -338,7 +338,7 @@ public class BoggleGUI {
 		errorMessageText.setBackground(Color.BLACK);
 		errorMessageText.setText("Notification Message");
 		errorMessageText.setForeground(Color.ORANGE);
-		errorMessageText.setBounds(289, 366, 148, 63);
+		errorMessageText.setBounds(327, 366, 110, 63);
 		frame.getContentPane().add(errorMessageText);
 		componentMap.put("errorMessageText", errorMessageText);
 
@@ -367,7 +367,7 @@ public class BoggleGUI {
 		timerText.setBackground(Color.BLACK);
 		timerText.setFont(new Font("Georgia", Font.BOLD | Font.ITALIC, 40));
 		timerText.setText("60");
-		timerText.setBounds(327, 316, 61, 52);
+		timerText.setBounds(356, 316, 61, 52);
 		frame.getContentPane().add(timerText);
 		componentMap.put("timerText", timerText);
 
@@ -384,27 +384,28 @@ public class BoggleGUI {
 		clearButton.setBounds(10, 265, 104, 40);
 		frame.getContentPane().add(clearButton);
 
-		JLabel label = new JLabel("============");
+		JLabel label = new JLabel("================");
 		label.setForeground(Color.CYAN);
-		label.setBounds(10, 309, 97, 14);
+		label.setBounds(10, 309, 132, 14);
 		frame.getContentPane().add(label);
 
-		JLabel label_1 = new JLabel("============");
+		JLabel label_1 = new JLabel("===============");
 		label_1.setForeground(Color.CYAN);
-		label_1.setBounds(182, 309, 97, 14);
+		label_1.setBounds(207, 309, 121, 14);
 		frame.getContentPane().add(label_1);
 
 		JLabel scoreLabel = new JLabel("000");
 		scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		scoreLabel.setFont(new Font("Georgia", Font.BOLD, 14));
 		scoreLabel.setForeground(Color.CYAN);
-		scoreLabel.setBounds(111, 308, 71, 14);
+		scoreLabel.setBounds(140, 308, 71, 14);
 		frame.getContentPane().add(scoreLabel);
 		componentMap.put("scoreLabel", scoreLabel);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 334, 269, 64);
+		scrollPane.setBounds(10, 334, 312, 64);
 		frame.getContentPane().add(scrollPane);
+		componentMap.put("scrollPane", scrollPane);
 		
 		JTextArea chatNotificationsBox = new JTextArea();
 		chatNotificationsBox.setFont(new Font("Georgia", Font.PLAIN, 12));
@@ -441,6 +442,7 @@ public class BoggleGUI {
 	public void addToChatBox(String message) {
 		JTextArea chatNotification = ((JTextArea) (componentMap.get("chatNotificationsBox")));
 		chatNotification.append("\n" + message);
+		chatNotification.setCaretPosition(chatNotification.getDocument().getLength());
 	}
 
 	public void setTimer(String time) {

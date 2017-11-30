@@ -45,10 +45,6 @@ public class BoggleHandler implements Runnable {
 					if(letterList.size()>0) {
 						for (ArrayList<Integer> letters : letterList) {
 							
-							for(int i : letters)
-								System.out.print(i+",");
-							
-							
 							if (boggleLogic.checkSubmission(letters)) {
 								System.out.println("REAL WORD");
 								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS","positions",new JSONArray(letters)));
@@ -94,27 +90,27 @@ public class BoggleHandler implements Runnable {
 		
 		case("APPLICATION"):
 			
-			JSONObject json = message.getJSONObject("message");
-			String action = json.getString("action").toUpperCase();
+			JSONObject application = message.getJSONObject("message");
+			String action = application.getString("action").toUpperCase();
 			
 			switch(action) {
 			
 			case ("CHAT"):
 				//System.out.println("Chat" +json.optString("chatMessage"));
-				String dialog = json.optString("chatMessage");
+				String dialog = application.optString("chatMessage");
 				boggleGUI.addToChatBox("Chat: " +dialog);
 				break;
 
 			case ("WORD"):
-				boggleGUI.addToWordList(json.optString("WORD"));
+				boggleGUI.addToWordList(application.optString("WORD"));
 				break;
 
 			case ("STARTGAME"):
-				int size = json.optJSONArray("board").length();
+				int size = application.optJSONArray("board").length();
 
 				if (size > 0) {
 					String letters = "";
-					for (Object j : json.optJSONArray("board")) {
+					for (Object j : application.optJSONArray("board")) {
 						letters+= j.toString();
 					}
 
@@ -125,7 +121,6 @@ public class BoggleHandler implements Runnable {
 						boggleRunning = true;
 						boggleGUI.setUpBoard(letters.toCharArray());
 						boggleLogic.resetBoard(letters.toCharArray());
-						boggleGUI.addToChatBox("BOARD SETUP");
 						
 						}catch(FileNotFoundException e) {
 							displayError(e.getMessage());
@@ -142,7 +137,8 @@ public class BoggleHandler implements Runnable {
 				break;
 
 			case ("POINTS"):
-				boggleGUI.addPoints(message.optInt("points"));
+				boggleGUI.addPoints(application.optInt("points"));
+				System.out.println(application.optInt("points"));
 				break;
 			}
 		break;
