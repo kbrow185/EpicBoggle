@@ -22,10 +22,10 @@ public class BoggleClient implements Runnable {
 	public BoggleClient() {
 
 		// serverName = "137.190.250.133";
+		connected = true;
 		serverName = "ec2-54-167-2-107.compute-1.amazonaws.com";
 		port = 8989;
 		jsons = new ArrayList<JSONObject>();
-		connected = false;
 		new Thread(this).start();
 	}
 
@@ -39,7 +39,6 @@ public class BoggleClient implements Runnable {
 			dataOut.println(login);
 			dataOut.flush();
 			System.out.println("connected To server.");
-			connected = true;
 			while (true) {
 
 				try {
@@ -50,6 +49,7 @@ public class BoggleClient implements Runnable {
 
 				} catch (IOException e) {
 					// Will be booted from server if theres an issue. No fix is required here.
+					connected = false;
 				}
 			}
 		} catch (IOException e) {
