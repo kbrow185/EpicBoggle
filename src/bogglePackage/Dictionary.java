@@ -22,9 +22,10 @@ public class Dictionary {
 			while ((line = fileIn.readLine()) != null) {
 				words.add(line);
 			}
-			fileIn.close();
-			wordList = (String[]) words.toArray();
 			exists = true;
+			fileIn.close();
+			wordList = (String[])words.toArray(new String[0]);
+			
 		} catch (Exception e) {
 			exists = false;
 			//The file is not found, thus 

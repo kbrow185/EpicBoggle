@@ -47,7 +47,7 @@ public class BoggleClient implements Runnable {
 
 	private void clientSetup() {
 		try {
-			String serverName = "ec2-54-167-2-107.compute-1.amazonaws.com";
+			String serverName = "ec2-52-54-164-196.compute-1.amazonaws.com";
 			int port = 8989;
 			clientSocket = new Socket(serverName, port);
 			dataIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
