@@ -14,10 +14,10 @@ public class BoggleHandler implements Runnable {
 	BoggleClient client;
 	BoggleGUI boggleGUI;
 	Boolean boggleRunning;
-	Boolean connectedToServer;
+	Boolean clientInitialized;
 
- 	public BoggleHandler() {
- 		connectedToServer = false;
+	public BoggleHandler() {
+		clientInitialized = false;
 		boggleRunning = false;
 		boggleGUI = new BoggleGUI();
 		new Thread(this).start();
@@ -25,36 +25,42 @@ public class BoggleHandler implements Runnable {
 
 	@Override
 	public void run() {
-		
+
 		while (boggleGUI.isRunning()) {
 			try {
 				Thread.sleep(200);
 				for (JSONObject message : boggleGUI.getCommands()) {
-					sendClientMessage(message); 
+					sendClientMessage(message);
 				}
-				
-				if(connectedToServer) {
-					for (JSONObject message : client.getResponses()) {
-						translateServerMessage(message); 
+
+				if (clientInitialized) {
+					if (client.isServerConnected()) {
+						for (JSONObject message : client.getResponses()) {
+							translateServerMessage(message);
+						}
+					} else {
+						clientInitialized = false;
+						displayError("You've lost connection to the server.");
 					}
 				}
 
 				if (boggleRunning) {
 					boggleGUI.setTimer(boggleLogic.getTime());
 					ArrayList<ArrayList<Integer>> letterList = boggleGUI.gatherWords();
-					if(letterList.size()>0) {
+					if (letterList.size() > 0) {
 						for (ArrayList<Integer> letters : letterList) {
-							
+
 							if (boggleLogic.checkSubmission(letters)) {
-								System.out.println("REAL WORD");
-								JSONObject submission = new JSONObject(JsonBuilder.JsonBuilderMethod("GUESS","positions",new JSONArray(letters)));
+								JSONObject submission = new JSONObject(
+										JsonBuilder.JsonBuilderMethod("GUESS", "positions", new JSONArray(letters)));
 								sendClientMessage(submission);
+							} else {
+								boggleGUI.notifyUser("INVALID ENTRY");
 							}
 						}
 					}
 				}
 			} catch (Exception e) {
-				
 				displayError(e.getMessage());
 			}
 		}
@@ -67,17 +73,19 @@ public class BoggleHandler implements Runnable {
 		if (json.equals("login")) {
 			client = new BoggleClient();
 			boggleGUI.addToChatBox("Connecting to Server");
-			connectedToServer=true;
-		} else if (connectedToServer) {
+			clientInitialized = true;
+		} else if (clientInitialized) {
 			client.sendMessage(message);
+		} else {
+			displayError("Connect to the server first.");
 		}
 
 	}
 
 	public void translateServerMessage(JSONObject message) {
 
-		String response =message.optString("type").toUpperCase();
-		
+		String response = message.optString("type").toUpperCase();
+
 		switch (response) {
 		case ("ACKNOWLEDGE"):
 
@@ -87,18 +95,16 @@ public class BoggleHandler implements Runnable {
 		case ("DENY"):
 			boggleGUI.addToChatBox(message.getString("message"));
 			break;
-		
-		case("APPLICATION"):
-			
+
+		case ("APPLICATION"):
+
 			JSONObject application = message.getJSONObject("message");
 			String action = application.getString("action").toUpperCase();
-			
-			switch(action) {
-			
+			switch (action) {
+
 			case ("CHAT"):
-				//System.out.println("Chat" +json.optString("chatMessage"));
 				String dialog = application.optString("chatMessage");
-				boggleGUI.addToChatBox("Chat: " +dialog);
+				boggleGUI.addToChatBox("Chat: " + dialog);
 				break;
 
 			case ("WORD"):
@@ -111,18 +117,18 @@ public class BoggleHandler implements Runnable {
 				if (size > 0) {
 					String letters = "";
 					for (Object j : application.optJSONArray("board")) {
-						letters+= j.toString();
+						letters += j.toString();
 					}
 
 					if (!boggleRunning) {
 						try {
-							
-						boggleLogic = new BoggleLogic();
-						boggleRunning = true;
-						boggleGUI.setUpBoard(letters.toCharArray());
-						boggleLogic.resetBoard(letters.toCharArray());
-						boggleGUI.addToChatBox("GAME STARTED");
-						}catch(FileNotFoundException e) {
+
+							boggleLogic = new BoggleLogic();
+							boggleRunning = true;
+							boggleGUI.setUpBoard(letters.toCharArray());
+							boggleLogic.resetBoard(letters.toCharArray());
+							boggleGUI.addToChatBox("GAME STARTED");
+						} catch (FileNotFoundException e) {
 							displayError(e.getMessage());
 						}
 					}
@@ -134,19 +140,25 @@ public class BoggleHandler implements Runnable {
 				boggleRunning = false;
 				boggleLogic.endGame();
 				boggleGUI.addToChatBox("GAME HAS ENDED");
+				boggleGUI.notifyUser("");
 				break;
 
 			case ("POINTS"):
-				boggleGUI.addPoints(application.optInt("points"));
-				System.out.println(application.optInt("points"));
+				int points = application.optInt("points");
+				if (points > 0) {
+					boggleGUI.addPoints(points);
+					boggleGUI.notifyUser(points + " Points!");
+				} else {
+					boggleGUI.notifyUser("Invalid Word");
+				}
 				break;
 			}
-		break;
+			break;
 		}
 
 	}
+
 	private void displayError(String error) {
-		System.out.println(error);
 		JOptionPane.showMessageDialog(null, error);
 	}
 }

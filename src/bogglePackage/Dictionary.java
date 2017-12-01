@@ -24,7 +24,7 @@ public class Dictionary {
 			while ((line = fileIn.readLine()) != null) {
 				wordList.add(line);
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new FileNotFoundException();
 		}
 	}

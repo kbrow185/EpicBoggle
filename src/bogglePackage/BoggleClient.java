@@ -17,50 +17,44 @@ public class BoggleClient implements Runnable {
 	PrintWriter dataOut;
 	BufferedReader dataIn;
 	ArrayList<JSONObject> jsons;
+	boolean connected;
 
 	public BoggleClient() {
 
-		//serverName = "ec2-34-236-147-3.compute-1.amazonaws.com";
+		// serverName = "137.190.250.133";
 		serverName = "ec2-54-167-2-107.compute-1.amazonaws.com";
 		port = 8989;
 		jsons = new ArrayList<JSONObject>();
+		connected = false;
 		new Thread(this).start();
 	}
 
 	@Override
 	public void run() {
 		try {
-			// TODO Auto-generated method stub
 			clientSocket = new Socket(serverName, port);
 			dataIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			dataOut = new PrintWriter(clientSocket.getOutputStream());
-			JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login","","username","Mr. Cool"));
+			JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login", "", "username", "Mr. Cool"));
 			dataOut.println(login);
 			dataOut.flush();
 			System.out.println("connected To server.");
-			// relay message on login
-
+			connected = true;
 			while (true) {
 
 				try {
 
 					JSONObject response = new JSONObject(dataIn.readLine());
 					jsons.add(response);
-					System.out.println("Receive :"+response);
+					System.out.println("Receive :" + response);
 
 				} catch (IOException e) {
-					e.printStackTrace();
 					// Will be booted from server if theres an issue. No fix is required here.
-					// The stack trace recieves valuable information from the server as to what went
-					// wrong.
 				}
 			}
 		} catch (IOException e) {
-			// If theres an issue I can't do much with it here. There is a connection issue
-			// and will likely kick the client.
-			// The stack trace recieves valuable information from the server as to what went
-			// wrong.
-			e.printStackTrace();
+			connected = false;
+			// If theres an issue I can't do much with it here. The handler will see that there is no longer a connection and notify the user.
 		}
 	}
 
@@ -69,11 +63,16 @@ public class BoggleClient implements Runnable {
 		dataOut.flush();
 		System.out.println("Data out: " + message);
 	}
-	public ArrayList<JSONObject> getResponses(){
-		
+
+	public ArrayList<JSONObject> getResponses() {
+
 		ArrayList<JSONObject> temp = new ArrayList<JSONObject>(jsons);
 		jsons.clear();
 		return temp;
+	}
+
+	public boolean isServerConnected() {
+		return connected;
 	}
 
 }

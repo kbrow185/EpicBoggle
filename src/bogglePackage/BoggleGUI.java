@@ -47,8 +47,8 @@ public class BoggleGUI {
 		submittedWordPositions = new ArrayList<ArrayList<Integer>>();
 		submittedCommands = new ArrayList<JSONObject>();
 		componentMap = new HashMap<String, Component>();
-		currentWord= new ArrayList<Integer>();
-				
+		currentWord = new ArrayList<Integer>();
+
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.BLACK);
 		frame.setBounds(100, 100, 463, 500);
@@ -64,7 +64,7 @@ public class BoggleGUI {
 		connectToServerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login","","username","Kenyon"));
+				JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login", "", "username", "Kenyon"));
 				submittedCommands.add(login);
 			}
 		});
@@ -125,7 +125,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile0", letterTile0);
 		letterTile0.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(0,letterTile0.getText());
+				addLetter(0, letterTile0.getText());
 			}
 		});
 		panel.add(letterTile0, "2, 2");
@@ -136,7 +136,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile1", letterTile1);
 		letterTile1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(1,letterTile1.getText());
+				addLetter(1, letterTile1.getText());
 			}
 		});
 		panel.add(letterTile1, "4, 2");
@@ -147,7 +147,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile2", letterTile2);
 		letterTile2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(2,letterTile2.getText());
+				addLetter(2, letterTile2.getText());
 			}
 		});
 		panel.add(letterTile2, "6, 2");
@@ -158,7 +158,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile3", letterTile3);
 		letterTile3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(3,letterTile3.getText());
+				addLetter(3, letterTile3.getText());
 			}
 		});
 		panel.add(letterTile3, "8, 2");
@@ -169,7 +169,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile4", letterTile4);
 		letterTile4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(4,letterTile4.getText());
+				addLetter(4, letterTile4.getText());
 			}
 		});
 		panel.add(letterTile4, "2, 4");
@@ -180,7 +180,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile5", letterTile5);
 		letterTile5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(5,letterTile5.getText());
+				addLetter(5, letterTile5.getText());
 			}
 		});
 		panel.add(letterTile5, "4, 4");
@@ -191,7 +191,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile6", letterTile6);
 		letterTile6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(6,letterTile6.getText());
+				addLetter(6, letterTile6.getText());
 			}
 		});
 		panel.add(letterTile6, "6, 4");
@@ -202,7 +202,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile7", letterTile7);
 		letterTile7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(7,letterTile7.getText());
+				addLetter(7, letterTile7.getText());
 			}
 		});
 		panel.add(letterTile7, "8, 4");
@@ -213,7 +213,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile8", letterTile8);
 		letterTile8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(8,letterTile8.getText());
+				addLetter(8, letterTile8.getText());
 			}
 		});
 		panel.add(letterTile8, "2, 6");
@@ -224,7 +224,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile9", letterTile9);
 		letterTile9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(9,letterTile9.getText());
+				addLetter(9, letterTile9.getText());
 			}
 		});
 		panel.add(letterTile9, "4, 6");
@@ -235,7 +235,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile10", letterTile10);
 		letterTile10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(10,letterTile10.getText());
+				addLetter(10, letterTile10.getText());
 			}
 		});
 		panel.add(letterTile10, "6, 6");
@@ -246,7 +246,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile11", letterTile11);
 		letterTile11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(11,letterTile11.getText());
+				addLetter(11, letterTile11.getText());
 			}
 		});
 		panel.add(letterTile11, "8, 6");
@@ -257,7 +257,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile12", letterTile12);
 		letterTile12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(12,letterTile12.getText());
+				addLetter(12, letterTile12.getText());
 			}
 		});
 		panel.add(letterTile12, "2, 8");
@@ -268,7 +268,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile13", letterTile13);
 		letterTile13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(13,letterTile13.getText());
+				addLetter(13, letterTile13.getText());
 			}
 		});
 		panel.add(letterTile13, "4, 8");
@@ -279,7 +279,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile14", letterTile14);
 		letterTile14.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(14,letterTile14.getText());
+				addLetter(14, letterTile14.getText());
 			}
 		});
 		panel.add(letterTile14, "6, 8");
@@ -290,7 +290,7 @@ public class BoggleGUI {
 		componentMap.put("letterTile15", letterTile15);
 		letterTile15.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addLetter(15,letterTile15.getText());
+				addLetter(15, letterTile15.getText());
 			}
 		});
 		panel.add(letterTile15, "8, 8");
@@ -319,18 +319,18 @@ public class BoggleGUI {
 		frame.getContentPane().add(submitWordText);
 		submitWordText.setColumns(10);
 		componentMap.put("submitWordText", submitWordText);
-		
+
 		JButton submitChatButton = new JButton("Submit Chat");
 		submitChatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("application","","action","CHAT","chatMessage",enterChatTextBox.getText()));
+				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("application", "", "action", "CHAT",
+						"chatMessage", enterChatTextBox.getText()));
 				submittedCommands.add(chat);
 				enterChatTextBox.setText("");
 			}
 		});
 		submitChatButton.setBounds(225, 408, 97, 23);
 		frame.getContentPane().add(submitChatButton);
-		
 
 		JTextPane errorMessageText = new JTextPane();
 		errorMessageText.setEditable(false);
@@ -349,7 +349,7 @@ public class BoggleGUI {
 				try {
 					submittedWordPositions.add(new ArrayList<Integer>(currentWord));
 				} catch (Exception e) {
-					//If the word is invalid, nothing is sent.
+					// If the word is invalid, nothing is sent.
 				}
 				clearEntry();
 			}
@@ -359,7 +359,6 @@ public class BoggleGUI {
 		submitButton.setBounds(327, 265, 110, 40);
 		submitButton.setMnemonic(KeyEvent.VK_ENTER);
 		frame.getContentPane().add(submitButton);
-		
 
 		JTextPane timerText = new JTextPane();
 		timerText.setEditable(false);
@@ -401,12 +400,12 @@ public class BoggleGUI {
 		scoreLabel.setBounds(140, 308, 71, 14);
 		frame.getContentPane().add(scoreLabel);
 		componentMap.put("scoreLabel", scoreLabel);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 334, 312, 64);
 		frame.getContentPane().add(scrollPane);
 		componentMap.put("scrollPane", scrollPane);
-		
+
 		JTextArea chatNotificationsBox = new JTextArea();
 		chatNotificationsBox.setFont(new Font("Georgia", Font.PLAIN, 12));
 		chatNotificationsBox.setEditable(false);
@@ -414,29 +413,18 @@ public class BoggleGUI {
 		componentMap.put("chatNotificationsBox", chatNotificationsBox);
 		scrollPane.setViewportView(chatNotificationsBox);
 
-		
-
-		// utilized this for loop from:
-		// https://stackoverflow.com/questions/4958600/get-a-swing-component-by-name
-		// Is helpful in gathering GUI components by name instead of having a ton of
-		// class variables.
-	
 		frame.setVisible(true);
 	}
 
-	private void addLetter(int position,String letter) {
+	private void addLetter(int position, String letter) {
 		currentWord.add(position);
-		System.out.println(letter+position);
 		JTextField wordSubmission = ((JTextField) (componentMap.get("submitWordText")));
-		wordSubmission.setText(wordSubmission.getText()+letter);
+		wordSubmission.setText(wordSubmission.getText() + letter);
 	}
-	
+
 	private void clearEntry() {
 		((JTextField) (componentMap.get("submitWordText"))).setText("");
 		currentWord.clear();
-	}
-	public void endGame() {
-		
 	}
 
 	public void addToChatBox(String message) {
