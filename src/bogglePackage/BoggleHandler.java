@@ -10,11 +10,11 @@ import org.json.JSONObject;
 
 public class BoggleHandler implements Runnable {
 
-	BoggleLogic boggleLogic;
-	BoggleClient client;
-	BoggleGUI boggleGUI;
-	Boolean boggleRunning;
-	Boolean clientConnecting;
+	private BoggleLogic boggleLogic;
+	private BoggleClient client;
+	private BoggleGUI boggleGUI;
+	private Boolean boggleRunning;
+	private Boolean clientConnecting;
 
 	public BoggleHandler() {
 		clientConnecting = false;
@@ -22,6 +22,7 @@ public class BoggleHandler implements Runnable {
 		boggleGUI = new BoggleGUI();
 		new Thread(this).start();
 	}
+
 
 	@Override
 	public void run() {
@@ -39,32 +40,40 @@ public class BoggleHandler implements Runnable {
 						}
 				}
 
-				if (boggleRunning) {
-					if(!client.isServerConnected()) {
-						throw new Exception("You've lost connection to the server.");
-					}
-					
-					boggleGUI.setTimer(boggleLogic.getTime());
-					ArrayList<ArrayList<Integer>> letterList = boggleGUI.gatherWords();
-					if (letterList.size() > 0) {
-						for (ArrayList<Integer> letters : letterList) {
-
-							if (boggleLogic.checkSubmission(letters) &&client.isServerConnected() ) {
-								JSONObject submission = new JSONObject(
-										JsonBuilder.JsonBuilderMethod("GUESS", "positions", new JSONArray(letters)));
-								sendClientMessage(submission);
-							} 
-							else {
-								boggleGUI.notifyUser("INVALID ENTRY");
-							}
-						}
-					}
-				}
+				runBoggle();
 			} catch (Exception e) {
 				displayError(e.getMessage());
 			}
 		}
 
+	}
+
+
+	private void runBoggle() {
+		if (boggleRunning) {
+			if(!client.isServerConnected()) {
+				boggleRunning = false;
+				clientConnecting = false;
+				displayError("You've lost connection to the server.");
+				return;
+			}
+			
+			boggleGUI.setTimer(boggleLogic.getTime());
+			ArrayList<ArrayList<Integer>> letterList = boggleGUI.gatherWords();
+			if (letterList.size() > 0) {
+				for (ArrayList<Integer> letters : letterList) {
+
+					if (boggleLogic.checkSubmission(letters) &&client.isServerConnected() ) {
+						JSONObject submission = new JSONObject(
+								JsonBuilder.JsonBuilderMethod("GUESS", "positions", new JSONArray(letters)));
+						sendClientMessage(submission);
+					} 
+					else {
+						boggleGUI.notifyUser("INVALID ENTRY");
+					}
+				}
+			}
+		}
 	}
 
 	public void sendClientMessage(JSONObject message) {
@@ -105,10 +114,6 @@ public class BoggleHandler implements Runnable {
 			JSONObject application = message.getJSONObject("message");
 			String action = application.getString("action").toUpperCase();
 			switch (action) {
-			
-
-			
-			
 			case ("CHAT"):
 				String dialog = application.optString("chatMessage");
 				boggleGUI.addToChatBox("Chat: " + dialog);

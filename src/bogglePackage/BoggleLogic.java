@@ -14,12 +14,13 @@ public class BoggleLogic {
 	private Timer gameTimer;
 	private char[] boardLetters;
 	private int boardWidth;
-	private Dictionary dictionary;
 
 	public BoggleLogic() throws FileNotFoundException {
 
 		try {
-			dictionary = new Dictionary();
+			if(!Dictionary.dictionaryExists()) {
+				throw new FileNotFoundException();
+			}
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("Dictionary File Not Found.");
 		}
@@ -80,7 +81,7 @@ public class BoggleLogic {
 	}
 
 	private boolean checkWord(String word) {
-		return dictionary.findWord(word);
+		return Dictionary.findWord(word);
 	}
 
 	private boolean checkPositions(ArrayList<Integer> positions) {
