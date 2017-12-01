@@ -87,6 +87,10 @@ public class BoggleHandler implements Runnable {
 		String response = message.optString("type").toUpperCase();
 
 		switch (response) {
+		
+		case("ERROR"):
+			boggleGUI.addToChatBox("ERROR:" +message.getString("message"));
+			break;
 		case ("ACKNOWLEDGE"):
 
 			boggleGUI.addToChatBox(message.getString("message"));
@@ -102,9 +106,7 @@ public class BoggleHandler implements Runnable {
 			String action = application.getString("action").toUpperCase();
 			switch (action) {
 			
-			case("ERROR"):
-				//boggleGUI.addToChatBox("Chat: " + dialog);
-				break;
+
 			
 			
 			case ("CHAT"):
