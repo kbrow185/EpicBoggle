@@ -108,7 +108,7 @@ public class BoggleLogic {
 			// new ArrayList<Integer>(Arrays.asList(dims.clone());
 
 			// Checks for ]top of board
-			if (!(firstValue % boardWidth == 0)) {
+			if (firstValue % boardWidth == 0) {
 				checkAndRemove(possibleSpots, -5);
 				checkAndRemove(possibleSpots, -1);
 				checkAndRemove(possibleSpots, 3);
