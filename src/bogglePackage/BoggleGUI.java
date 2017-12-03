@@ -320,7 +320,7 @@ public class BoggleGUI {
 		submitWordText.setColumns(10);
 		componentMap.put("submitWordText", submitWordText);
 
-		JButton submitChatButton = new JButton("Submit Chat");
+		JButton submitChatButton = new JButton("Chat");
 		submitChatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("application", "", "action", "CHAT",

@@ -44,7 +44,7 @@ public class BoggleLogic {
 	public void resetBoard(char[] letters) {
 		boardWidth = (int) Math.sqrt(letters.length);
 		boardLetters = letters;
-		timeRemaining = 60;
+		timeRemaining = 59;
 		gameTimer.restart();
 		gameStart();
 	}
