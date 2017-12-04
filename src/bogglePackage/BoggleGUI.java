@@ -87,7 +87,7 @@ public class BoggleGUI {
 		startGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("PLAY",false,""));
+				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("PLAY", false, ""));
 				submittedCommands.add(connect);
 			}
 		});
@@ -323,7 +323,7 @@ public class BoggleGUI {
 		JButton submitChatButton = new JButton("Chat");
 		submitChatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("CHAT",true, chatTextBox.getText()));
+				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("CHAT", true, chatTextBox.getText()));
 				submittedCommands.add(chat);
 				chatTextBox.setText("");
 			}

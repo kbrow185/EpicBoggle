@@ -23,7 +23,6 @@ public class BoggleHandler implements Runnable {
 		new Thread(this).start();
 	}
 
-
 	@Override
 	public void run() {
 
@@ -35,9 +34,9 @@ public class BoggleHandler implements Runnable {
 				}
 
 				if (clientConnecting) {
-						for (JSONObject message : client.getResponses()) {
-							translateServerMessage(message);
-						}
+					for (JSONObject message : client.getResponses()) {
+						translateServerMessage(message);
+					}
 				}
 
 				runBoggle();
@@ -48,27 +47,25 @@ public class BoggleHandler implements Runnable {
 
 	}
 
-
 	private void runBoggle() {
 		if (boggleRunning) {
-			if(!client.isServerConnected()) {
+			if (!client.isServerConnected()) {
 				boggleRunning = false;
 				clientConnecting = false;
 				displayError("You've lost connection to the server.");
 				return;
 			}
-			
+
 			boggleGUI.setTimer(boggleLogic.getTime());
 			ArrayList<ArrayList<Integer>> letterList = boggleGUI.gatherWords();
 			if (letterList.size() > 0) {
 				for (ArrayList<Integer> letters : letterList) {
 
-					if (boggleLogic.checkSubmission(letters) &&client.isServerConnected() ) {
+					if (boggleLogic.checkSubmission(letters) && client.isServerConnected()) {
 						JSONObject submission = new JSONObject(
 								JsonBuilder.JsonBuilderMethod("GUESS", "positions", new JSONArray(letters)));
 						sendClientMessage(submission);
-					} 
-					else {
+					} else {
 						boggleGUI.notifyUser("INVALID ENTRY");
 					}
 				}
@@ -90,15 +87,15 @@ public class BoggleHandler implements Runnable {
 		}
 
 	}
-	
+
 	public void translateServerMessage(JSONObject message) {
 
 		String response = message.optString("type").toUpperCase();
 
 		switch (response) {
-		
-		case("ERROR"):
-			boggleGUI.addToChatBox("ERROR:" +message.getString("message"));
+
+		case ("ERROR"):
+			boggleGUI.addToChatBox("ERROR:" + message.getString("message"));
 			break;
 		case ("ACKNOWLEDGE"):
 
@@ -117,7 +114,7 @@ public class BoggleHandler implements Runnable {
 			case ("CHAT"):
 				String dialog = application.optString("chatMessage");
 				String user = application.optString("username");
-				boggleGUI.addToChatBox(user+":" + dialog);
+				boggleGUI.addToChatBox(user + ":" + dialog);
 				break;
 
 			case ("WORD"):

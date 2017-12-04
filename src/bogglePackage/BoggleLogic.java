@@ -18,7 +18,7 @@ public class BoggleLogic {
 	public BoggleLogic() throws FileNotFoundException {
 
 		try {
-			if(!Dictionary.dictionaryExists()) {
+			if (!Dictionary.dictionaryExists()) {
 				throw new FileNotFoundException();
 			}
 		} catch (FileNotFoundException e) {

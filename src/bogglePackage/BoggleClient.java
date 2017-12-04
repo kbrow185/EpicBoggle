@@ -25,25 +25,23 @@ public class BoggleClient implements Runnable {
 	@Override
 	public void run() {
 
-			clientSetup();
+		clientSetup();
 
-			while (connected) {
-				try {
-	
-						JSONObject response = new JSONObject(dataIn.readLine());
-						jsons.add(response);
-						System.out.println("Receive :" + response);
-	
-					} catch (IOException e) {
-						// Will be booted from server if there's an issue. No fix is required here.
-						connected = false;
-					}
-				
-					
-				}
+		while (connected) {
+			try {
+
+				JSONObject response = new JSONObject(dataIn.readLine());
+				jsons.add(response);
+				System.out.println("Receive :" + response);
+
+			} catch (IOException e) {
+				// Will be disconnected from server if there's an issue. 
+				//This will catch the exception and throw a flag to prevent future client use.
+				connected = false;
 			}
-		
-	
+
+		}
+	}
 
 	private void clientSetup() {
 		try {
@@ -54,9 +52,11 @@ public class BoggleClient implements Runnable {
 			dataOut = new PrintWriter(clientSocket.getOutputStream());
 			JSONObject login = new JSONObject(JsonBuilder.JsonBuilderMethod("login", "", "username", "Captain Cool"));
 			sendMessage(login);
-		}catch (IOException e) {
+		} catch (IOException e) {
 			connected = false;
-			// If there's an issue I can't do much with it here. The handler will see that there is no longer a connection and notify the user.
+			// If there's an issue I can't do much with it here.
+			// Will be disconnected from server if there's an issue. 
+			//This will catch the exception and throw a flag for future client use.
 		}
 	}
 
