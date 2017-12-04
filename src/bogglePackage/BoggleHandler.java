@@ -116,7 +116,8 @@ public class BoggleHandler implements Runnable {
 			switch (action) {
 			case ("CHAT"):
 				String dialog = application.optString("chatMessage");
-				boggleGUI.addToChatBox("Chat: " + dialog);
+				String user = application.optString("username");
+				boggleGUI.addToChatBox(user+":" + dialog);
 				break;
 
 			case ("WORD"):

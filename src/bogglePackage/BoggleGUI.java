@@ -87,7 +87,7 @@ public class BoggleGUI {
 		startGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("PLAY"));
+				JSONObject connect = new JSONObject(JsonBuilder.JsonBuilderMethod("PLAY",false,""));
 				submittedCommands.add(connect);
 			}
 		});
@@ -302,11 +302,11 @@ public class BoggleGUI {
 		frame.getContentPane().add(wordPool);
 		componentMap.put("wordPool", wordPool);
 
-		JTextField enterChatTextBox = new JTextField();
-		enterChatTextBox.setBounds(10, 409, 205, 20);
-		frame.getContentPane().add(enterChatTextBox);
-		enterChatTextBox.setColumns(10);
-		componentMap.put("enterChatTextBox", enterChatTextBox);
+		JTextField chatTextBox = new JTextField();
+		chatTextBox.setBounds(10, 409, 205, 20);
+		frame.getContentPane().add(chatTextBox);
+		chatTextBox.setColumns(10);
+		componentMap.put("enterChatTextBox", chatTextBox);
 
 		JTextField submitWordText = new JTextField();
 		submitWordText.setEditable(false);
@@ -323,10 +323,9 @@ public class BoggleGUI {
 		JButton submitChatButton = new JButton("Chat");
 		submitChatButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("application", "", "action", "CHAT",
-						"chatMessage", enterChatTextBox.getText()));
+				JSONObject chat = new JSONObject(JsonBuilder.JsonBuilderMethod("CHAT",true, chatTextBox.getText()));
 				submittedCommands.add(chat);
-				enterChatTextBox.setText("");
+				chatTextBox.setText("");
 			}
 		});
 		submitChatButton.setBounds(225, 408, 97, 23);

@@ -16,10 +16,6 @@ public class JsonBuilder {
 
 	}
 
-	public static String JsonBuilderMethod(String type, String Message) {
-		return "{type:" + type + ", message:" + Message + "}";
-
-	}
 
 	public static String JsonBuilderMethod(String gameAction, String objectName, JSONArray word) {
 
@@ -27,11 +23,21 @@ public class JsonBuilder {
 				+ objectName + ":" + word + "}}";
 
 	}
+	
 
-	public static String JsonBuilderMethod(String gameAction) {
+	public static String JsonBuilderMethod(String gameAction,boolean message, String messageContent) {
 
-		return "{type: 'application', message:" + "{ module: 'Boggle_Of_Epicness'," + "action:" + gameAction + "}}";
+		String jsonMessage;
+		if(message) {
+			jsonMessage = "{type: 'application', message:" + "{ module: 'Boggle_Of_Epicness'," + "action:" + gameAction + ",chatMessage:" +messageContent+"}}";
+		}
+		else {
+			jsonMessage = "{type: 'application', message:" + "{ module: 'Boggle_Of_Epicness'," + "action:" + gameAction+"}}";
+		}
+		
+		return jsonMessage;
 
 	}
+
 
 }
