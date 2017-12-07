@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import org.json.JSONObject;
 
 public class BoggleClient implements Runnable {
@@ -45,7 +48,7 @@ public class BoggleClient implements Runnable {
 
 	private void clientSetup() {
 		try {
-			String serverName = "ec2-34-224-216-23.compute-1.amazonaws.com";
+			String serverName = JOptionPane.showInputDialog("Enter an IP Address. \n Default: ec2-34-224-216-23.compute-1.amazonaws.com");
 			int port = 8989;
 			clientSocket = new Socket(serverName, port);
 			dataIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
